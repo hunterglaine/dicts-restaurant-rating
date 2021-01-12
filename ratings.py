@@ -30,15 +30,17 @@
 import random
 import sys
 
-def create_dictionary():
-    data_to_rate = open(sys.argv[1])
+def create_dictionary(filename):
+    data_to_rate = open(filename) # open(sys.argv[1])
     ratings = {}
 
     for line in data_to_rate:
-        data_to_rate = line.rstrip().split(":")
-        ratings[data_to_rate[0]] = data_to_rate[1]  
-
+        line_to_rate = line.rstrip().split(":")
+        ratings[line_to_rate[0]] = line_to_rate[1]  
+    
+    data_to_rate.close()
     return ratings
+
 
 
 def display_ratings(ratings_dict):
@@ -81,8 +83,8 @@ def update_random_rating(ratings_dict):
 
 
 
-def give_choices():
-    restaurant_ratings = create_dictionary()
+def give_choices(filename):
+    restaurant_ratings = create_dictionary(filename)
 
     while True:
         print()
@@ -104,7 +106,7 @@ def give_choices():
         elif choice == 'U':
             update_random_rating(restaurant_ratings)
 
-give_choices()
+give_choices('scores.txt')
             
 
 
