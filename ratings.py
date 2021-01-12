@@ -30,18 +30,24 @@
 
 import sys
 
-def display_restaurant_ratings():
-    """ Display and Organize Restaurant Ratings"""
+def create_dictionary():
+    data_to_rate = open(sys.argv[1])
+    ratings = {}
 
-    restaurant_data = open(sys.argv[1])
+    for line in data_to_rate:
+        data_to_rate = line.rstrip().split(":")
+        ratings[data_to_rate[0]] = data_to_rate[1]  
 
-    restaurant_ratings = {}
+    return ratings
 
-    for line in restaurant_data:
-        
-        restaurant_info = line.rstrip().split(":")
-        restaurant_ratings[restaurant_info[0]] = restaurant_info[1]  
 
+def display_ratings(ratings_dict):
+    restaurant_names = sorted(ratings_dict)
+
+    for name in restaurant_names:
+        print(f'{name} is rated at {ratings_dict[name]}')
+
+def add_restaurant(ratings_dict):
     user_restaurant = input("What restaurant would you like to rate? ")
 
     while True:
@@ -54,16 +60,68 @@ def display_restaurant_ratings():
         else:
             print("Sorry try again!")
 
-    restaurant_ratings[user_restaurant] = user_rating
+    ratings_dict[user_restaurant] = user_rating
+    return ratings_dict
 
-    restaurant_names = sorted(restaurant_ratings)
+def give_choices():
+    restaurant_ratings = create_dictionary()
 
-    for name in restaurant_names:
-        print(f'{name} is rated at {restaurant_ratings[name]}')
+    while True:
+        print()
+        print('What would you like to do?')
+        print()
+        print('To display a list of restaurants along with their ratings, enter "D"')
+        print('To add a new restaurant and rate it, enter "A"')
+        print('To quit, enter "Q"')
+        choice = input(">>> ").upper()
+        print()
 
-    restaurant_data.close()
+        if choice == 'Q':
+            break
+        elif choice == 'D':
+            display_ratings(restaurant_ratings)
+        elif choice == 'A':
+            add_restaurant(restaurant_ratings)
 
-display_restaurant_ratings()
+give_choices()
+            
+
+
+
+# def display_restaurant_ratings():
+#     """ Display and Organize Restaurant Ratings"""
+
+#     restaurant_data = open(sys.argv[1])
+
+#     restaurant_ratings = {}
+
+#     for line in restaurant_data:
+        
+#         restaurant_info = line.rstrip().split(":")
+#         restaurant_ratings[restaurant_info[0]] = restaurant_info[1]  
+
+#     user_restaurant = input("What restaurant would you like to rate? ")
+
+#     while True:
+#         user_rating = input(f'On a scale on 1 - 5, how would you rate {user_restaurant} ')
+
+#         if user_rating in ['1', '2', '3', '4', '5']:
+#             user_rating = int(user_rating)
+#             break
+
+#         else:
+#             print("Sorry try again!")
+
+#     restaurant_ratings[user_restaurant] = user_rating
+
+#     restaurant_names = sorted(restaurant_ratings)
+
+#     for name in restaurant_names:
+#         print(f'{name} is rated at {restaurant_ratings[name]}')
+
+#     restaurant_data.close()
+
+# display_restaurant_ratings()
 
 
 
