@@ -16,10 +16,12 @@
 
     # Close file
 
-def display_restaurant_ratings(file):
+import sys
+
+def display_restaurant_ratings():
     """ Display and Organize Restaurant Ratings"""
 
-    restaurant_data = open(file)
+    restaurant_data = open(sys.argv[1])
 
     restaurant_ratings = {}
 
@@ -40,7 +42,7 @@ def display_restaurant_ratings(file):
 
     restaurant_data.close()
 
-display_restaurant_ratings('scores.txt')
+display_restaurant_ratings()
 
 
 
