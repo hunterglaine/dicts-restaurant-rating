@@ -27,7 +27,7 @@
                 #display()
                 #input()
             #break out of function if user selects quit
-
+import random
 import sys
 
 def create_dictionary():
@@ -48,20 +48,38 @@ def display_ratings(ratings_dict):
         print(f'{name} is rated at {ratings_dict[name]}')
 
 def add_restaurant(ratings_dict):
-    user_restaurant = input("What restaurant would you like to rate? ")
+    user_restaurant = input("What restaurant would you like to rate?  >  ")
 
     while True:
-        user_rating = input(f'On a scale on 1 - 5, how would you rate {user_restaurant} ')
+        user_rating = input(f'On a scale on 1 - 5, how would you rate {user_restaurant}?  >  ')
 
         if user_rating in ['1', '2', '3', '4', '5']:
             user_rating = int(user_rating)
             break
 
         else:
-            print("Sorry try again!")
+            print("Invalid input, try again!")
 
     ratings_dict[user_restaurant] = user_rating
     return ratings_dict
+
+
+def update_random_rating(ratings_dict):
+    random_restaurant = random.choice(list(ratings_dict))
+    print(f'The current rating for {random_restaurant} is {ratings_dict[random_restaurant]}.')
+    while True:
+        user_rating = input(f'On a scale on 1 - 5, how would you rate {random_restaurant}?  >  ')
+
+        if user_rating in ['1', '2', '3', '4', '5']:
+            user_rating = int(user_rating)
+            break
+        else:
+            print("Invalid input, try again!")
+
+    ratings_dict[random_restaurant] = user_rating
+    return ratings_dict
+
+
 
 def give_choices():
     restaurant_ratings = create_dictionary()
@@ -72,6 +90,7 @@ def give_choices():
         print()
         print('To display a list of restaurants along with their ratings, enter "D"')
         print('To add a new restaurant and rate it, enter "A"')
+        print('To update a random restaurant\'s rating, enter "U"')
         print('To quit, enter "Q"')
         choice = input(">>> ").upper()
         print()
@@ -82,6 +101,8 @@ def give_choices():
             display_ratings(restaurant_ratings)
         elif choice == 'A':
             add_restaurant(restaurant_ratings)
+        elif choice == 'U':
+            update_random_rating(restaurant_ratings)
 
 give_choices()
             
